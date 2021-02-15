@@ -49,7 +49,7 @@ func main() {
 	core.client_metadata.first_name, core.client_metadata.last_name, core.client_metadata.birth_date,
 	core.event_metadata.date_created, core.event_metadata.event_date, core.event_metadata.provider_id
 	from core.event_metadata 
-	join core.event on core.event.id = core.event_metadata.id 
+	join core.event on core.event.id = core.event_metadata.event_id 
 	join core.client_metadata on core.event_metadata.base_entity_id = core.client_metadata.base_entity_id 
 	where core.event.id > %d order by core.event.id asc limit %d`, eventID, limit)
 	rows, err := db.Query(mainQuery)
@@ -134,7 +134,7 @@ func main() {
 		}
 		if tableName == "child-registration" {
 			fmt.Println("insert client anak")
-			q1 := `select core.event.json from core.event join core.event_metadata on core.event.id = core.event_metadata.id
+			q1 := `select core.event.json from core.event join core.event_metadata on core.event.id = core.event_metadata.event_id
 			where event_metadata.base_entity_id = '` + base_entity_id + `' and core.event_metadata.event_type = 'Child Registration'`
 			var json1 string
 			db.QueryRow(q1).Scan(&json1)
@@ -142,7 +142,7 @@ func main() {
 			json.Unmarshal([]byte(json1), &event1)
 			fields1 := lib.EventParser(event1.Obs)
 
-			q2 := `select core.client.json from core.client join core.client_metadata on core.client.id = core.client_metadata.id
+			q2 := `select core.client.json from core.client join core.client_metadata on core.client.id = core.client_metadata.client_id
 			where client_metadata.base_entity_id = '` + base_entity_id + `'`
 			var json2 string
 			db.QueryRow(q2).Scan(&json2)
