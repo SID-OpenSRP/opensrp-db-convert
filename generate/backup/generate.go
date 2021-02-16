@@ -83,7 +83,7 @@ func main() {
 		err = rows.Scan(&event_type)
 		// fmt.Println(event_type)
 
-		mainQuery := fmt.Sprintf(" select core.event.json from core.event join core.event_metadata on core.event.id = core.event_metadata.id where event_metadata.event_type = '%s' order by core.event.id desc", event_type)
+		mainQuery := fmt.Sprintf(" select core.event.json from core.event join core.event_metadata on core.event.id = core.event_metadata.event_id where event_metadata.event_type = '%s' order by core.event.id desc", event_type)
 
 		fields := make(map[string]string)
 
