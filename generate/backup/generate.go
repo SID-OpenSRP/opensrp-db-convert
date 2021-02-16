@@ -12,7 +12,7 @@ import (
 
 const (
 	DB_USER     = "opensrp_admin"
-	DB_PASSWORD = "C4nT(T0ucH)Th1S"
+	DB_PASSWORD = "changeit"
 	DB_NAME     = "opensrp"
 	PORT        = "5431"
 	SCHEMA      = "sid"
